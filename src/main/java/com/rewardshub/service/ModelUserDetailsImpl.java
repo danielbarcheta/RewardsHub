@@ -1,6 +1,6 @@
 package com.rewardshub.service;
 
-import com.rewardshub.model.ModelUser;
+import com.rewardshub.model.User;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -12,9 +12,9 @@ import java.util.stream.Collectors;
 @Getter
 public class ModelUserDetailsImpl implements UserDetails {
 
-    private ModelUser modelUser;
+    private User modelUser;
 
-    public ModelUserDetailsImpl(ModelUser modelUser) {
+    public ModelUserDetailsImpl(User modelUser) {
         this.modelUser = modelUser;
     }
 

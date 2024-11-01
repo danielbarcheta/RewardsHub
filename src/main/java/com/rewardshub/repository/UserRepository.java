@@ -1,14 +1,14 @@
 package com.rewardshub.repository;
 
-import com.rewardshub.model.ModelUser;
+import com.rewardshub.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends JpaRepository<ModelUser, Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
 
-    Optional<ModelUser> findByEmail(String email);
+    Optional<User> findByEmail(String email);
 
 }

@@ -1,7 +1,7 @@
 package com.rewardshub.service;
 
 
-import com.rewardshub.model.ModelUser;
+import com.rewardshub.model.User;
 import com.rewardshub.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,7 +17,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        ModelUser modelUser = userRepository.findByEmail(username)
+        User modelUser = userRepository.findByEmail(username)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado!"));
         return new ModelUserDetailsImpl(modelUser);
     }

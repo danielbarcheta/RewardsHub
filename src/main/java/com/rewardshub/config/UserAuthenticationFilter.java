@@ -1,6 +1,6 @@
 package com.rewardshub.config;
 
-import com.rewardshub.model.ModelUser;
+import com.rewardshub.model.User;
 import com.rewardshub.repository.UserRepository;
 import com.rewardshub.service.JwtTokenService;
 import com.rewardshub.service.ModelUserDetailsImpl;
@@ -33,7 +33,7 @@ public class UserAuthenticationFilter extends OncePerRequestFilter{
             String token = recuperaToken(request);
             if (token != null) {
                 String subject = jwtTokenService.pegarToken(token);
-                ModelUser modelUser = userRepository.findByEmail(subject).get();
+                User modelUser = userRepository.findByEmail(subject).get();
                 ModelUserDetailsImpl modelUserDetails = new ModelUserDetailsImpl(modelUser);
                 Authentication authentication =
                         new UsernamePasswordAuthenticationToken(

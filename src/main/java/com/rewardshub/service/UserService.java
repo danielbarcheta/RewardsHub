@@ -5,8 +5,9 @@ import com.rewardshub.config.SecurityConfig;
 import com.rewardshub.dto.CreateUserDTO;
 import com.rewardshub.dto.JwtTokenDTO;
 import com.rewardshub.dto.LoginUserDTO;
+import com.rewardshub.model.Business;
 import com.rewardshub.model.ModelRole;
-import com.rewardshub.model.ModelUser;
+import com.rewardshub.model.User;
 import com.rewardshub.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -31,8 +32,10 @@ public class UserService {
     @Autowired
     private JwtTokenService jwtTokenService;
 
-    public void salvarUsuario(CreateUserDTO createUserDto) {
-        ModelUser newUser = ModelUser.builder()
+    private BusinessService businessService;
+
+    public void saveUser(CreateUserDTO createUserDto) {
+        User newUser = User.builder()
                 .email(createUserDto.email())
                 .password(securityConfig.passwordEncoder().encode(createUserDto.password()))
                 .roles(List.of(ModelRole.builder().name(createUserDto.role()).build()))
@@ -41,7 +44,7 @@ public class UserService {
         userRepository.save(newUser);
     }
 
-    public JwtTokenDTO autenticarUsuario(LoginUserDTO loginUserDto) {
+    public JwtTokenDTO authenticateUser(LoginUserDTO loginUserDto) {
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
                 new UsernamePasswordAuthenticationToken(loginUserDto.email(), loginUserDto.password());
 
@@ -49,4 +52,32 @@ public class UserService {
         ModelUserDetailsImpl modelUserDetails = (ModelUserDetailsImpl) authentication.getPrincipal();
         return new JwtTokenDTO(jwtTokenService.generateToken(modelUserDetails));
     }
+
+    public User createUser(User user) {
+        return userRepository.save(user);
+    }
+
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
+    public User getUserById(Long id) {
+        return userRepository.findById(id).orElse(null);
+    }
+
+    public User updateUser(Long id, User userDetails) {
+        User user = getUserById(id);
+        if (user != null) {
+            user.setEmail(userDetails.getEmail());
+            user.setPassword(userDetails.getPassword());
+            user.setRoles(userDetails.getRoles());
+            return userRepository.save(user);
+        }
+        return null;
+    }
+
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id);
+    }
+
 }
