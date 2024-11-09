@@ -6,7 +6,8 @@ e acumular pontos para serem trocados por brindes/descontos
 A SER IMPLEMENTADO:
 - Front end
 - Construção das APIs
+- API Gateway para direcionar as requisicoes entre os microssevicos, sendo estes: Envio de email/whatsapp, Acumulo de pontos, Notificacoes (RabbitMQ)
 - Servicos no back para acumular pontos
-- Melhorias de performance (indexacao, cache, etc)
+- Melhorias de performance de acesso aos dados (indexacao, cache, etc)
 - Alguns liquibases para melhorar o esquema que está incompleto
 - Dockerização e deploy na AWS
